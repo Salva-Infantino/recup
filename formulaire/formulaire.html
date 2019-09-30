@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css" />
+    <title>LocalStorage</title>
+  </head>
+  <body>
+    <form action="" >
+      <label for="nom">Nom:</label>
+      <input type="text" id="nom" name="nom" />
+
+      <label for="prenom">Prénom:</label>
+      <input type="text" id="prenom" name="prenom" />
+
+      <label for="email">Email:</label>
+      <input type="mail" id="email" name="email" />
+
+      <p class="label">Sexe:</p>
+      <input type="radio" id="m" value="M" name="sexe" />
+      <label for="m">Masculin</label>
+      <input type="radio" id="f" value="F" name="sexe" />
+      <label for="f">Féminin</label>
+
+      <p class="interet">Intéressé par:</p>
+      <input type="checkbox" id="sport" name="interet[]" value="sport" />
+      <label for="sport">Sport</label>
+      <input
+        type="checkbox"
+        id="webdesign"
+        name="interet[]"
+        value="webdesign"
+      />
+      <label for="webdesign">Webdesign</label>
+      <input type="checkbox" id="voyages" name="interet[]" value="voyages" />
+      <label for="voyages">Voyages</label>
+      <input type="checkbox" id="livres" name="interet[]" value="livres" />
+      <label for="livres">Livres</label>
+      <input type="checkbox" id="cuisine" name="interet[]" value="cuisine" />
+      <label for="cuisine">Cuisine</label>
+
+      <label for="message">Message:</label>
+      <textarea name="message" id="message" cols="30" rows="10"></textarea>
+
+      <div class="output"></div>
+
+      <button>Envoyer</button>
+    </form>
+
+    <script>
+      const myForm = document.querySelector("form");
+      myForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        let formData = new FormData(myForm);
+        //console.log(formData.entries());
+        dataJson = new Object();
+        //dataJson.prenom = "Salvatore";
+        let arrayInteret = [];
+
+        for (value of formData.entries()) {
+          console.log(value);
+          if (value[0] == "interet[]") {
+            arrayInteret.push(value[1]);
+          } else {
+            dataJson[value[0]] = value[1];
+          }
+          //console.log(dataJson);
+        }
+        dataJson.interet = arrayInteret;
+        console.log(dataJson);
+        localStorage.setItem("quidam", JSON.stringify(dataJson));
+      });
+
+      /*if (localStorage.getItem("quidam")) {
+        let quidam = JSON.parse(localStorage.quidam);
+        document.querySelector(".output").innerHTML = "On a vu " + quidam.nom;
+      }*/
+
+      if (localStorage.getItem("quidam")) {
+        let quidam = JSON.parse(localStorage.quidam);
+        let contentList = "<ul>";
+        for (key in quidam) {
+          if (key == "interet") {
+            contentList += "<li>Interêt: ";
+            let ssList = "<ul>";
+            quidam[key].forEach(element => {
+              ssList += `<li>${element}</li>`;
+            });
+            ssList += "</ul>";
+            contentList += ssList;
+          } else {
+            contentList += `<li>${key} : ${quidam[key]}</li>`;
+          }
+        }
+        contentList += "</ul>";
+        let sortie = document.querySelector(".output");
+        sortie.innerHTML = contentList;
+      }
+    </script>
+  </body>
+</html>

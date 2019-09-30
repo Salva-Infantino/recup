@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Découverte Vue JS</title>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <p v-if="connexion" class="login">Vous êtes connecté !</p>
+        <h1>{{ title_page }}</h1>
+        <p v-if="affiche">{{ content_page }}</p>
+        <ident-form @connexion="test_connect"></ident-form>
+      </header>
+
+      <section>
+        <h2>Recette de Cookies</h2>
+        <img v-if="url_img" v-bind:src="url_img" :alt="alt_img" />
+        <article>
+          <h3>Ingredients</h3>
+          <ul>
+            <li v-for="item in ingredients">
+              {{ item.label }} : {{ item.qty }}
+            </li>
+          </ul>
+        </article>
+        <!--<article>
+          <h3>Préparation</h3>
+          <ol>
+            <li v-for="item in preparation">{{ item.step }}</li>
+          </ol>
+        </article>-->
+      </section>
+      <h3>New ingredient</h3>
+      <label>Label: </label
+      ><input type="text" v-model="new_ingredient.label" /> <label>Qty: </label
+      ><input type="text" v-model="new_ingredient.qty" />
+      <button @click="add_ingredient">Valider</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="ident-form.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

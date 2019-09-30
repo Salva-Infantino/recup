@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ToDo List | Vue & Buefy</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css" />
+  </head>
+  <body>
+    <div id="app">
+      <section class="section">
+        <header>
+          <h1 class="title">{{ title_page }}</h1>
+          <p class="subtitle">{{ description }}</p>
+        </header>
+        <hr />
+
+        <todo-list :todos="todolist" v-if="todolist.length > 0"></todo-list>
+        <p v-else>Pas de tâches</p>
+
+        <h2>Ajout d'une tâche</h2>
+        <todo-form></todo-form>
+
+        <hr />
+        <footer>
+          <p>{{ footer }}</p>
+        </footer>
+      </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+    <script>
+      Vue.component("todo-form", {
+        template: `<div class='todo-form'>
+                    <b-field label="Titre">
+                      <b-input v-model="newTask.title_todo"></b-input>
+                    </b-field>
+                    <b-field label="Author">
+                      <b-input v-model="newTask.author"></b-input>
+                    </b-field>
+                    <b-field label="Description">
+                      <b-input v-model="newTask.info"></b-input>
+                    </b-field>
+                    <button @click="addTask">Valider</button>  
+                  </div>`,
+        data() {
+          return {
+            newTask: {
+              title_todo: "",
+              author: "",
+              info: ""
+            }
+          };
+        },
+        methods: {
+          addTask() {
+            this.$root.addTask(this.newTask);
+          }
+        }
+      });
+
+      Vue.component("todo-item", {
+        template: `<li class="section">
+                      <b-collapse :open="false" aria-id="contentIdForA11y1">
+                          <button
+                              class="button is-primary"
+                              slot="trigger"
+                              aria-controls="contentIdForA11y1">{{ todo.title_todo }}</button>
+                          <div class="notification">
+                              <div class="content">
+                                  <h3>
+                                      {{ titleAuthor }}
+                                  </h3>
+                                  <p>
+                                      {{ todo.info }}
+                                  </p>
+                              </div>
+                          </div>
+                      </b-collapse>
+                    </li>`,
+        props: ["todo"],
+        computed: {
+          titleAuthor() {
+            return this.todo.author + " a écrit " + this.todo.title_todo;
+          }
+        }
+      });
+
+      Vue.component("todo-list", {
+        template: `<ul>
+                <todo-item v-for="item in todos" :todo="item"></todo-item>
+              </ul>`,
+        props: ["todos"]
+      });
+
+      new Vue({
+        el: "#app",
+        data: {
+          title_page: "ToDo List",
+          description:
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis molestias iusto temporibus distinctio repellendus illo harum accusamus officia nihil quam a eum blanditiis, voluptatibus praesentium nulla delectus eaque facilis repellat!",
+          footer: "Ceci est le footer",
+          todolist: [
+            /*{
+              title_todo: "Vue js",
+              author: "salvatore",
+              info: "apprendre le framework vue js avec pierre"
+            },
+            {
+              title_todo: "React js",
+              author: "salvatore",
+              info: "apprendre le framework react js avec olivier"
+            },
+            {
+              title_todo: "stage",
+              author: "salvatore",
+              info: "trouver un stage de 6 semaines"
+            }*/
+          ]
+        },
+        methods: {
+          addTask(newTask) {
+            this.todolist.push(newTask);
+            localStorage.setItem("todos", JSON.stringify(this.todolist));
+          }
+        },
+        created() {
+          if (localStorage.todos) {
+            this.todolist = JSON.parse(localStorage.getItem("todos"));
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

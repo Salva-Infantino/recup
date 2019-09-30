@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css" />
+    <title>Ingrédients dynamiques</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <section class="section">
+          <ul class="ingredients">
+            <ingredient-item
+              v-for="item in ingredients"
+              :ingredient="item"
+            ></ingredient-item>
+          </ul>
+          <hr />
+          <h2 class="title">Ajout ingredient</h2>
+          <b-field label="Label">
+            <b-input v-model="label" icon="earth"></b-input>
+          </b-field>
+          <b-field label="Password">
+            <b-input type="password" icon="key" password-reveal> </b-input>
+          </b-field>
+        </section>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+    <script>
+      Vue.filter("cap", function(value) {
+        return value[0].toUpperCase() + value.substring(1);
+      });
+
+      Vue.component("ingredient-item", {
+        template: `<li class="ingredient_item"><strong> {{ ingredient.label | cap }} </strong> {{ ingredient.qty}} </li>`,
+        props: ["ingredient"]
+      });
+
+      new Vue({
+        el: "#app",
+        data: {
+          ingredients: [
+            {
+              label: "oeufs",
+              qty: 1
+            },
+            {
+              label: "sucre",
+              qty: "85g"
+            },
+            {
+              label: "beure",
+              qty: "85g"
+            },
+            {
+              label: "farine",
+              qty: "150g"
+            },
+            {
+              label: "chocolat",
+              qty: "100g"
+            },
+            {
+              label: "sucre vanillé",
+              qty: "1 sachet"
+            },
+            {
+              label: "levure",
+              qty: "1 c à c"
+            },
+            {
+              label: "sel",
+              qty: "1/2 c à c"
+            }
+          ]
+        }
+      });
+    </script>
+  </body>
+</html>

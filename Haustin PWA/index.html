@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Haustin PWA</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <!-- General support -->
+    <link rel="icon" sizes="72x72" href="/imgs/icons/pwa_72x72.png" />
+    <link rel="icon" sizes="96x96" href="/imgs/icons/pwa_96x96.png" />
+    <link rel="icon" sizes="128x128" href="/imgs/icons/pwa_128x128.png" />
+    <link rel="icon" sizes="144x144" href="/imgs/icons/pwa_144x144.png" />
+    <link rel="icon" sizes="152x152" href="/imgs/icons/pwa_152x152.png" />
+    <link rel="icon" sizes="192x192" href="/imgs/icons/pwa_192x192.png" />
+    <link rel="icon" sizes="384x384" href="/imgs/icons/pwa_384x384.png" />
+    <link rel="icon" sizes="512x512" href="/imgs/icons/pwa_512x512.png" />
+
+    <meta name="theme-color" content="#222222" />
+    <!-- Apple support -->
+    <link
+      rel="apple-touch-icon"
+      sizes="96x96"
+      href="/imgs/icons/pwa_96x96.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="512x512"
+      href="/imgs/icons/pwa_512x512.png"
+    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  </head>
+  <body>
+    <h1>Hello my PWA !</h1>
+    <img src="imgs/steve.jpg" alt="Steve Jobs" />
+    <a href="contact.html">Contact</a>
+  </body>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").then(registered_sw => {
+        console.log("Service worker enregistré !", registered_sw);
+      });
+    }
+  </script>
+</html>

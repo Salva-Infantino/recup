@@ -1,0 +1,28 @@
+{
+  "connection": "default",
+  "collectionName": "beers",
+  "info": {
+    "name": "beer",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {
+    "name": {
+      "required": true,
+      "type": "string"
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "alcool": {
+      "type": "decimal"
+    }
+  }
+}

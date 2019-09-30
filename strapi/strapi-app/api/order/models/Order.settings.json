@@ -1,0 +1,25 @@
+{
+  "connection": "default",
+  "collectionName": "orders",
+  "info": {
+    "name": "order",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "comment": ""
+  },
+  "attributes": {
+    "price": {
+      "type": "decimal"
+    },
+    "validate": {
+      "required": true,
+      "type": "boolean"
+    },
+    "details": {
+      "type": "json"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Indie Flower", sans-serif;
+}
+body {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+h1 {
+  font-size: 3rem;
+}
+img {
+  width: 75%;
+  margin: 0 auto;
+}
+a {
+  font-size: 2rem;
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Test API</title>
+    <style>
+      a {
+        text-decoration: none;
+        color: silver;
+      }
+      .favorite {
+        color: gold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Les équipes en LiguA</h1>
+    <ol class="list"></ol>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <script>
+      const url =
+        "http://soccer.sportsopendata.net/v1/leagues/liga/seasons/16-17/teams";
+
+      let json;
+      let myList = document.querySelector(".list");
+      var favorites = localStorage.favorites
+        ? JSON.parse(localStorage.favorites)
+        : new Array();
+
+      axios.get(url).then(function(response) {
+        console.log(response.data.data.teams);
+        json = response.data.data.teams;
+
+        /*json.forEach(element => {
+          myList.innerHTML += `<li>${element.name} <a href="#" id="${
+            element.name
+          }">★</a></li>`;
+        });*/
+        json.forEach(element => {
+          var found = favorites.find(function(favori) {
+            return favori == element.name;
+          });
+          myList.innerHTML += found
+            ? `<li>${element.name} <a href="#" class="favorite" id="${
+                element.name
+              }">★</a></li>`
+            : `<li>${element.name} <a href="#" id="${element.name}">★</a></li>`;
+        });
+      });
+      myList.addEventListener("click", function(ev) {
+        if (ev.target.tagName == "A") {
+          ev.preventDefault();
+          ev.target.classList.toggle("favorite");
+
+          favorites.push(ev.target.id);
+          localStorage.setItem("favorites", JSON.stringify(favorites));
+        } else {
+          return;
+        }
+      });
+    </script>
+  </body>
+</html>

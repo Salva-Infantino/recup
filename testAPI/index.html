@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Types de bières</h1>
+    <ul class="types_list"></ul>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <script>
+      const url =
+        "https://opendata.visitflanders.org/tourist/brands/beer_styles.json?page=1&page_size=500&limit=1&fbclid=IwAR0-IZOD8HtnDgWUNEA1JezhPKlCptcA4CWznGd5IYXdbUkPDDWtaTh5RtA";
+      let json;
+      axios
+        .get(url)
+        .then(function(response) {
+          console.log(response.data);
+          json = response.data;
+
+          let myUl = document.querySelector(".types_list");
+          json.forEach(element => {
+            myUl.innerHTML += `<li>${element.Name_en}</li>`;
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    </script>
+  </body>
+</html>
